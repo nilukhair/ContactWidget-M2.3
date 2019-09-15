@@ -62,9 +62,8 @@ $currPageUrl = $helper->getCurrentUrls();
         <div class="field name required">
             <label class="label" for="subject"><span><?php /* @escapeNotVerified */ echo __('Order Type') ?></span></label>
             <div class="control">
-                <input type="radio" class="radio required-entry" name="order_type" data-validate="{'validate-one-required-by-name':true}" value="1"><?php /* @escapeNotVerified */ echo __('Prepaid') ?>
-                <input type="radio" class="radio required-entry" name="order_type" data-validate="{'validate-one-required-by-name':true}" value="2"><?php /* @escapeNotVerified */ echo __('Postpaid') ?>
-
+                <input type="radio" class="radio required-entry" name="order_type" data-validate="{'validate-one-required-by-name':true}" value="0"><?php /* @escapeNotVerified */ echo __('Prepaid') ?>
+                <input type="radio" class="radio required-entry" name="order_type" data-validate="{'validate-one-required-by-name':true}" value="1"><?php /* @escapeNotVerified */ echo __('Postpaid') ?><br>
             </div>
         </div>
         <div class="field name required">
