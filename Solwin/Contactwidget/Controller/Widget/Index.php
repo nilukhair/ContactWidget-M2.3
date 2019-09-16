@@ -90,32 +90,32 @@ class Index extends \Magento\Framework\App\Action\Action
                         'contactwidget_section/recaptcha/recaptcha_errormessage'
                         );
         
-        // if ($data['enablerecaptcha']) {
-        //     if ($captchaErrorMsg == '') {
-        //         $captchaErrorMsg = 'Invalid captcha. Please try again.';
-        //     }
-        //     $captcha = '';
-        //     if (filter_input(INPUT_POST, 'g-recaptcha-response') !== null) {
-        //         $captcha = filter_input(INPUT_POST, 'g-recaptcha-response');
-        //     }
+        if ($data['enablerecaptcha']) {
+            if ($captchaErrorMsg == '') {
+                $captchaErrorMsg = 'Invalid captcha. Please try again.';
+            }
+            $captcha = '';
+            if (filter_input(INPUT_POST, 'g-recaptcha-response') !== null) {
+                $captcha = filter_input(INPUT_POST, 'g-recaptcha-response');
+            }
 
-        //     if (!$captcha) {
-        //         $this->messageManager->addError($captchaErrorMsg);
-        //         return $resultRedirect->setUrl($redirectUrl);
-        //     } else {
-        //         $response = file_get_contents(
-        //                 "https://www.google.com/recaptcha/api/siteverify"
-        //                 . "?secret=" . $secretkey
-        //                 . "&response=" . $captcha
-        //                 . "&remoteip=" . $remoteAddr);
-        //         $response = json_decode($response, true);
+            if (!$captcha) {
+                $this->messageManager->addError($captchaErrorMsg);
+                return $resultRedirect->setUrl($redirectUrl);
+            } else {
+                $response = file_get_contents(
+                        "https://www.google.com/recaptcha/api/siteverify"
+                        . "?secret=" . $secretkey
+                        . "&response=" . $captcha
+                        . "&remoteip=" . $remoteAddr);
+                $response = json_decode($response, true);
 
-        //         if ($response["success"] === false) {
-        //             $this->messageManager->addError($captchaErrorMsg);
-        //             return $resultRedirect->setUrl($redirectUrl);
-        //         }
-        //     }
-        // }
+                if ($response["success"] === false) {
+                    $this->messageManager->addError($captchaErrorMsg);
+                    return $resultRedirect->setUrl($redirectUrl);
+                }
+            }
+        }
 
         try {
 
@@ -150,7 +150,8 @@ class Index extends \Magento\Framework\App\Action\Action
             if ($id) {
                 $model->load($id);
             }
-            $model->setCreatedAt(date('Y-m-d H:i:s'));
+            // $model->setCreatedAt(date('Y-m-d H:i:s'));
+            $data['created_at'] = date('Y-m-d H:i:s');
             $model->setData($data);
             $model->save();
 
